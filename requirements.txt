@@ -1,5 +1,5 @@
 wheel
 setuptools
 concrete-ml
-kaagle
+kaggle
 pandas
