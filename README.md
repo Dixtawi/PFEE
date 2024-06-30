@@ -1,22 +1,26 @@
-# PFEE
+## Continuous Integration
 
-CARDI Julien
+Ce projet utilise GitHub Actions pour l'intégration continue.
 
-FERRONI Sandro
+### Configuration
 
-HOLARD Fabien
+Le workflow CI est défini dans `.github/workflows/ci.yml`.
 
-GIRAUD Paul
+### Validation des Messages de Commit
 
-MOYO-KANDEM Auren
+Les messages de commit doivent suivre ce format:
+- `feat: Description de la fonctionnalité`
+- `fix: Description de la correction`
+- `docs: Description de la documentation`
+- `style: Description des changements de style`
+- `refactor: Description du refactoring`
+- `test: Description des tests`
+- `chore: Description des tâches de maintenance`
 
-SKALLI Camile
+Un hook de validation des messages de commit est inclus et sera exécuté pendant le processus CI.
 
+### Installation des Dépendances
 
-# TO DO the first time:
-
--> Move file: 'commit-msg' to: '.git/hooks/':
- mv commit-msg .git/hooks/
--> Make the file executable:
- chmod +x .git/hooks/commit-msg
+```sh
+pip install -r requirements.txt
 
