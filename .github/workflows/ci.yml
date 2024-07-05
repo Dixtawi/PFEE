@@ -1,0 +1,20 @@
+name: Commit Message Check
+
+on: [push]
+
+jobs:
+  commit-message-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Run commit message check
+        run: |
+          # Get the list of commits
+          commits=$(git log --format=%H ${{ github.event.before }}..${{ github.sha }})
+
+          # Check each commit message
+          for commit in $commits; do
+            git show -s --format=%B $commit | ./commit-msg /dev/stdin
+          done
