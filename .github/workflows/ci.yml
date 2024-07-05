@@ -1,0 +1,16 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main  # ajustez selon votre branche principale
+
+jobs:
+  validate-commit-message:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Validate commit message format
+        run: bash check_commit_message.sh $GITHUB_EVENT_PATH
