@@ -42,7 +42,7 @@ A commit message validation hook is included and will be executed during the CI 
 
 ```sh
 pip install -r requirements.txt
-
+```
 
 <p align="center">
   <a href="https://docs.zama.ai/concrete-ml"> 📒 Documentation</a> | <a href="https://zama.ai/community"> 💛 Community support</a> | <a href="https://github.com/zama-ai/awesome-zama"> 📚 FHE resources by Zama</a>
