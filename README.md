@@ -1,5 +1,11 @@
 # PFEE : CV Relevance Prediction
 
+
+## Introduction
+In the current recruitment context, companies receive a large number of applications for each job opening. Manually evaluating these resumes is a time-consuming task and prone to biases. Predicting the relevance of resumes to job postings using machine learning can greatly improve the efficiency and fairness of the recruitment process.
+
+However, the use of sensitive personal data in machine learning models raises concerns regarding data privacy and security. This is where our project comes in. We have explored advanced techniques such as Privacy-Preserving Machine Learning (PPML) and Fully Homomorphic Encryption (FHE) to develop a model capable of predicting the relevance of resumes while ensuring the confidentiality of candidate data.
+
 ## About This Project
 ### Project Overview
 As part of our engineering school curriculum, we undertook a capstone project (PFEE - Projet de Fin d'Études Encadré) in collaboration with Zama, a pioneering company in the field of homomorphic encryption. Our primary objective was to delve into the functionalities of Privacy-Preserving Machine Learning (PPML), Fully Homomorphic Encryption (FHE), and Concrete ML.
