@@ -14,4 +14,3 @@ jobs:
 
       - name: Validate commit message format
         run: bash ci/check_commit_message.sh $GITHUB_EVENT_PATH
-
