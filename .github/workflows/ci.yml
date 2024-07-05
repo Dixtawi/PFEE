@@ -3,7 +3,7 @@ name: CI
 on:
   push:
     branches:
-      - main  # ajustez selon votre branche principale
+      - '*' 
 
 jobs:
   validate-commit-message:
