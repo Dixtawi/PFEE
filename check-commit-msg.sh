@@ -10,3 +10,4 @@ if ! echo "$commit_message" | grep -qE "$COMMIT_MSG_REGEX"; then
   echo "The message must begin with one of the following keywords: feat, fix, docs, style, refactor, test, chore."
   exit 1
 fi
+
