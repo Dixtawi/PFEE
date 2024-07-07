@@ -3,3 +3,5 @@ setuptools
 concrete-ml
 kaggle
 pandas
+sphinx
+sphinx_rtd_theme
