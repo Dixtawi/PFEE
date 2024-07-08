@@ -47,11 +47,12 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">cvreco</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#module-cvreco.data_handling">data_handling</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#cvreco.data_handling.format_data"><code class="docutils literal notranslate"><span class="pre">format_data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cvreco.data_handling.load_data"><code class="docutils literal notranslate"><span class="pre">load_data()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="#module-cvreco.processing">processing</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#cvreco.processing.filter_cv"><code class="docutils literal notranslate"><span class="pre">filter_cv()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cvreco.processing.process_dataset"><code class="docutils literal notranslate"><span class="pre">process_dataset()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cvreco.processing.split_scaler"><code class="docutils literal notranslate"><span class="pre">split_scaler()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="#module-cvreco.utils">utils</a><ul>
@@ -88,27 +89,24 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-cvreco">
-<span id="cvreco"></span><h1>cvreco<a class="headerlink" href="#module-cvreco" title="Permalink to this heading"></a></h1>
+  <section id="cvreco">
+<h1>cvreco<a class="headerlink" href="#cvreco" title="Permalink to this heading"></a></h1>
 </section>
 <section id="module-cvreco.data_handling">
 <span id="data-handling"></span><h1>data_handling<a class="headerlink" href="#module-cvreco.data_handling" title="Permalink to this heading"></a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="cvreco.data_handling.format_data">
-<span class="sig-prename descclassname"><span class="pre">cvreco.data_handling.</span></span><span class="sig-name descname"><span class="pre">format_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cvreco/data_handling.html#format_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cvreco.data_handling.format_data" title="Permalink to this definition"></a></dt>
-<dd><p>Format data to the expected format if valid.</p>
+<dt class="sig sig-object py" id="cvreco.data_handling.load_data">
+<span class="sig-prename descclassname"><span class="pre">cvreco.data_handling.</span></span><span class="sig-name descname"><span class="pre">load_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cvreco/data_handling.html#load_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cvreco.data_handling.load_data" title="Permalink to this definition"></a></dt>
+<dd><p>Load the dataset from its source folder’s path.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<em>pandas.DataFrame</em>) – The DataFrame containing data.</p></li>
-<li><p><strong>format_type</strong> (<em>string</em>) – Expected format type to convert the data.</p></li>
-</ul>
+<dd class="field-odd"><p><strong>source_path</strong> (<em>string</em>) – The path to the source folder</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The formated dataframe if format_type is valid, else the original dataframe.</p>
+<dd class="field-even"><p>The complete dataframe and the dataframe of skills.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pandas.DataFrame</p>
+<dd class="field-odd"><p>(pd.DataFrame, pd.DataFrame)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -117,18 +115,38 @@
 <section id="module-cvreco.processing">
 <span id="processing"></span><h1>processing<a class="headerlink" href="#module-cvreco.processing" title="Permalink to this heading"></a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="cvreco.processing.filter_cv">
-<span class="sig-prename descclassname"><span class="pre">cvreco.processing.</span></span><span class="sig-name descname"><span class="pre">filter_cv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cvreco/processing.html#filter_cv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cvreco.processing.filter_cv" title="Permalink to this definition"></a></dt>
-<dd><p>Filter dataset to remove cv with 0 jobs.</p>
+<dt class="sig sig-object py" id="cvreco.processing.process_dataset">
+<span class="sig-prename descclassname"><span class="pre">cvreco.processing.</span></span><span class="sig-name descname"><span class="pre">process_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filtering_df</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cvreco/processing.html#process_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cvreco.processing.process_dataset" title="Permalink to this definition"></a></dt>
+<dd><p>Process the dataset and filters it to add predictions, and have a model compliant to ML models.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>dataset</strong> (<em>pandas.DataFrame</em>) – Dataset to filter, needs to have a number_jobs column.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> (<em>pd.DataFrame</em>) – The dataset to process</p></li>
+<li><p><strong>filtering_df</strong> (<em>pd.DataFrame</em>) – The dataframe of skills to create the predictions.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The filtered dataset.</p>
+<dd class="field-even"><p>The processed dataset.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pandas.DataFrame</p>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="cvreco.processing.split_scaler">
+<span class="sig-prename descclassname"><span class="pre">cvreco.processing.</span></span><span class="sig-name descname"><span class="pre">split_scaler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dfModel</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cvreco/processing.html#split_scaler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cvreco.processing.split_scaler" title="Permalink to this definition"></a></dt>
+<dd><p>Split processed dataset into train and test dataloaders.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dfModel</strong> (<em>pd.DataFrame</em>) – The processed dataframe to split.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple containing train and test dataloaders.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(ndarray, ndarray, ndarray, ndarray)</p>
 </dd>
 </dl>
 </dd></dl>

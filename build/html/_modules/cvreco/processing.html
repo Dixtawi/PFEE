@@ -75,17 +75,64 @@
            <div itemprop="articleBody">
              
   <h1>Source code for cvreco.processing</h1><div class="highlight"><pre>
-<div class="viewcode-block" id="filter_cv"><a class="viewcode-back" href="../../modules.html#cvreco.processing.filter_cv">[docs]</a><span></span><span class="k">def</span> <span class="nf">filter_cv</span><span class="p">(</span><span class="n">dataset</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Filter dataset to remove cv with 0 jobs.</span>
+<span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<div class="viewcode-block" id="process_dataset"><a class="viewcode-back" href="../../modules.html#cvreco.processing.process_dataset">[docs]</a><span class="k">def</span> <span class="nf">process_dataset</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">filtering_df</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Process the dataset and filters it to add predictions, and have a model compliant to ML models.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        dataset (pandas.DataFrame): Dataset to filter, needs to have a number_jobs column.</span>
+<span class="sd">        dataset (pd.DataFrame): The dataset to process</span>
+<span class="sd">        filtering_df (pd.DataFrame): The dataframe of skills to create the predictions.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        pandas.DataFrame: The filtered dataset.</span>
+<span class="sd">        pd.DataFrame: The processed dataset.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">dataset</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;number_jobs&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">dataset</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">dataset</span></div>
+    <span class="n">dataset</span><span class="p">[</span><span class="s1">&#39;prediction&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">df_filtered</span> <span class="o">=</span> <span class="n">filtering_df</span><span class="p">[</span><span class="n">filtering_df</span><span class="p">[</span><span class="s1">&#39;Skill&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(js|javascript|java script)&#39;</span><span class="p">,</span> <span class="n">case</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">na</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span>
+    <span class="n">df_filtered</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="n">dataset</span><span class="p">[</span><span class="s1">&#39;file_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">df_filtered</span><span class="p">[</span><span class="s1">&#39;file_name&#39;</span><span class="p">])]</span>
+    <span class="n">dataset</span><span class="p">[</span><span class="s1">&#39;prediction&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="s1">&#39;file_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">df_filtered</span><span class="p">[</span><span class="s1">&#39;file_name&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="c1"># Balancing the dataset</span>
+    <span class="n">one</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="n">dataset</span><span class="p">[</span><span class="s1">&#39;prediction&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">zero</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="n">dataset</span><span class="p">[</span><span class="s1">&#39;prediction&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">one</span><span class="p">),</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">dfModel</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">one</span><span class="p">,</span> <span class="n">zero</span><span class="p">])</span>
+    <span class="n">dfModel</span> <span class="o">=</span> <span class="n">dfModel</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Preparing the final dataset</span>
+    <span class="n">dfModel</span> <span class="o">=</span> <span class="n">filtering_df</span><span class="p">[</span><span class="n">filtering_df</span><span class="p">[</span><span class="s1">&#39;file_name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">dfModel</span><span class="p">[</span><span class="s1">&#39;file_name&#39;</span><span class="p">])]</span>
+    <span class="n">dfModel</span> <span class="o">=</span> <span class="n">dfModel</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">dataset</span><span class="p">[[</span><span class="s1">&#39;file_name&#39;</span><span class="p">,</span> <span class="s1">&#39;prediction&#39;</span><span class="p">]],</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;file_name&#39;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+    <span class="n">dfModel</span> <span class="o">=</span> <span class="n">dfModel</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">])</span>
+
+    <span class="n">df_pivot</span> <span class="o">=</span> <span class="n">dfModel</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s1">&#39;file_name&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;Skill&#39;</span><span class="p">,</span> <span class="n">aggfunc</span><span class="o">=</span><span class="s1">&#39;size&#39;</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
+    <span class="n">df_prediction</span> <span class="o">=</span> <span class="n">dfModel</span><span class="p">[[</span><span class="s1">&#39;file_name&#39;</span><span class="p">,</span> <span class="s1">&#39;prediction&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;file_name&#39;</span><span class="p">)</span>
+    <span class="n">dfModel</span> <span class="o">=</span> <span class="n">df_pivot</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">df_prediction</span><span class="p">,</span> <span class="n">lsuffix</span><span class="o">=</span><span class="s1">&#39;_skill&#39;</span><span class="p">,</span> <span class="n">rsuffix</span><span class="o">=</span><span class="s1">&#39;_pred&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+    
+    <span class="n">dfModel</span> <span class="o">=</span> <span class="n">dfModel</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;file_name&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">dfModel</span></div>
+
+<div class="viewcode-block" id="split_scaler"><a class="viewcode-back" href="../../modules.html#cvreco.processing.split_scaler">[docs]</a><span class="k">def</span> <span class="nf">split_scaler</span><span class="p">(</span><span class="n">dfModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Split processed dataset into train and test dataloaders.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        dfModel (pd.DataFrame): The processed dataframe to split.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (ndarray, ndarray, ndarray, ndarray): Tuple containing train and test dataloaders.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">dfModel</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;prediction_pred&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">dfModel</span><span class="p">[</span><span class="s1">&#39;prediction_pred&#39;</span><span class="p">]</span>
+    
+    <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+    <span class="c1"># Data normalization</span>
+    <span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+    <span class="n">X_train</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+    <span class="n">X_val</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span></div>
 </pre></div>
 
            </div>

@@ -1,17 +1,40 @@
-def format_data(data, format_type):
-    """Format data to the expected format if valid.
+import json
+import os
+
+def load_data(source_path):
+    """Load the dataset from its source folder's path.
 
     Args:
-        data (pandas.DataFrame): The DataFrame containing data.
-        format_type (string): Expected format type to convert the data.
+        source_path (string): The path to the source folder
 
     Returns:
-        pandas.DataFrame: The formated dataframe if format_type is valid, else the original dataframe.
+        (pd.DataFrame, pd.DataFrame): The complete dataframe and the dataframe of skills.
     """
-    if format_type == "JSON":
-        return data.toJSON()
-    elif format_type == "CSV":
-        return data.toCSV()
-    else:
-        print("Wrong format")
-    return data
+    data = []
+    dataskill = []
+
+    for file_name in os.listdir(folder_path):
+        if file_name.endswith('.json'):
+            with open(os.path.join(folder_path, file_name), 'r', encoding='utf-8') as file:
+                json_data = json.load(file)
+                text = json_data['text']
+                annotations = json_data.get('annotations', [])
+                skills = []
+                for annotation in annotations:
+                    start, end, label = annotation
+                    skill = label.replace('SKILL: ', '').lower()
+                    skills.append(skill)
+                    dataskill.append({
+                        'file_name': file_name,
+                        'text': text,
+                        'Skill': skill
+                    })
+                data.append({
+                    'file_name': file_name,
+                    'text': text,
+                    'Skills': skills
+                })
+
+    df = pd.DataFrame(data)
+    dfskill = pd.DataFrame(dataskill)
+    return df, dfskill
