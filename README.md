@@ -47,7 +47,8 @@ A commit message validation hook is included and will be executed during the CI 
 ### Installation of Dependencies
 
 ```sh
-pip install -r requirements.txt
+cd script/
+make all
 ```
 
 <p align="center">
