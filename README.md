@@ -49,12 +49,3 @@ A commit message validation hook is included and will be executed during the CI 
 ```sh
 pip install -r requirements.txt
 ```
-
-<p align="center">
-  <a href="https://docs.zama.ai/concrete-ml"> 📒 Documentation</a> | <a href="https://zama.ai/community"> 💛 Community support</a> | <a href="https://github.com/zama-ai/awesome-zama"> 📚 FHE resources by Zama</a>
-</p>
-<p align="center">
-  <a href="https://github.com/zama-ai/concrete-ml/releases"><img src="https://img.shields.io/github/v/release/zama-ai/concrete-ml?style=flat-square"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-BSD--3--Clause--Clear-%23ffb243?style=flat-square"></a>
-  <a href="https://github.com/zama-ai/bounty-program"><img src="https://img.shields.io/badge/Contribute-Zama%20Bounty%20Program-%23ffd208?style=flat-square"></a>
-</p>
