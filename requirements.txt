@@ -1,5 +1,4 @@
 wheel
 setuptools
-concrete-ml
 kaggle
 pandas
