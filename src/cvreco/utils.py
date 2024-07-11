@@ -1,11 +1,10 @@
-def list_to_stringlist(list_param):
-    """Convert a list to a list in a string.
+def sample_function(sample_arg):
+    """Sample function for docstring.
 
     Args:
-        list_param (list): Non-empty list to convert.
+        sample_arg (Any): Sample argument of the function
 
     Returns:
-        string: String containing the parameter list.
+        Any: Returned value.
     """
-    list_formated = ""
-    return list_formated
+    return sample_arg

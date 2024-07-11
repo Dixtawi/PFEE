@@ -11,7 +11,6 @@ from concrete.ml.sklearn.svm import LinearSVC
 from concrete.ml.sklearn.neighbors import KNeighborsClassifier
 from concrete.ml.sklearn.tree import DecisionTreeClassifier
 from concrete.ml.sklearn.xgb import XGBClassifier
-
 models = {
     "Random Forest": (SkRandomForestClassifier(n_estimators=100, random_state=42), RandomForestClassifier(n_estimators=100, random_state=42)),
     "Logistic Regression": (SkLogisticRegression(max_iter=1000, random_state=42), LogisticRegression(max_iter=1000, random_state=42)),

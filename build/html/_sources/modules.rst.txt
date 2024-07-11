@@ -37,3 +37,27 @@ visuals
    :members:
    :undoc-members:
    :show-inheritance:
+
+modeling
+========
+
+.. automodule:: cvreco.modeling
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+models
+======
+
+.. automodule:: cvreco.modeling.models
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+results
+=======
+
+.. automodule:: cvreco.modeling.results
+   :members:
+   :undoc-members:
+   :show-inheritance:

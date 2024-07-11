@@ -56,11 +56,17 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="#module-cvreco.utils">utils</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#cvreco.utils.list_to_stringlist"><code class="docutils literal notranslate"><span class="pre">list_to_stringlist()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cvreco.utils.sample_function"><code class="docutils literal notranslate"><span class="pre">sample_function()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="#module-cvreco.visuals">visuals</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#cvreco.visuals.visualise_data"><code class="docutils literal notranslate"><span class="pre">visualise_data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cvreco.visuals.roc_comparison"><code class="docutils literal notranslate"><span class="pre">roc_comparison()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#module-cvreco.modeling">modeling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#module-cvreco.modeling.models">models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#module-cvreco.modeling.results">results</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#cvreco.modeling.results.get_models_metrics"><code class="docutils literal notranslate"><span class="pre">get_models_metrics()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -89,8 +95,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="cvreco">
-<h1>cvreco<a class="headerlink" href="#cvreco" title="Permalink to this heading"></a></h1>
+  <section id="module-cvreco">
+<span id="cvreco"></span><h1>cvreco<a class="headerlink" href="#module-cvreco" title="Permalink to this heading"></a></h1>
 </section>
 <section id="module-cvreco.data_handling">
 <span id="data-handling"></span><h1>data_handling<a class="headerlink" href="#module-cvreco.data_handling" title="Permalink to this heading"></a></h1>
@@ -155,18 +161,18 @@
 <section id="module-cvreco.utils">
 <span id="utils"></span><h1>utils<a class="headerlink" href="#module-cvreco.utils" title="Permalink to this heading"></a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="cvreco.utils.list_to_stringlist">
-<span class="sig-prename descclassname"><span class="pre">cvreco.utils.</span></span><span class="sig-name descname"><span class="pre">list_to_stringlist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">list_param</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cvreco/utils.html#list_to_stringlist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cvreco.utils.list_to_stringlist" title="Permalink to this definition"></a></dt>
-<dd><p>Convert a list to a list in a string.</p>
+<dt class="sig sig-object py" id="cvreco.utils.sample_function">
+<span class="sig-prename descclassname"><span class="pre">cvreco.utils.</span></span><span class="sig-name descname"><span class="pre">sample_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample_arg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cvreco/utils.html#sample_function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cvreco.utils.sample_function" title="Permalink to this definition"></a></dt>
+<dd><p>Sample function for docstring.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>list_param</strong> (<em>list</em>) – Non-empty list to convert.</p>
+<dd class="field-odd"><p><strong>sample_arg</strong> (<em>Any</em>) – Sample argument of the function</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>String containing the parameter list.</p>
+<dd class="field-even"><p>Returned value.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>string</p>
+<dd class="field-odd"><p>Any</p>
 </dd>
 </dl>
 </dd></dl>
@@ -175,16 +181,48 @@
 <section id="module-cvreco.visuals">
 <span id="visuals"></span><h1>visuals<a class="headerlink" href="#module-cvreco.visuals" title="Permalink to this heading"></a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="cvreco.visuals.visualise_data">
-<span class="sig-prename descclassname"><span class="pre">cvreco.visuals.</span></span><span class="sig-name descname"><span class="pre">visualise_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bin_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cvreco/visuals.html#visualise_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cvreco.visuals.visualise_data" title="Permalink to this definition"></a></dt>
-<dd><p>Visualisation of the data with matplolib tools.</p>
+<dt class="sig sig-object py" id="cvreco.visuals.roc_comparison">
+<span class="sig-prename descclassname"><span class="pre">cvreco.visuals.</span></span><span class="sig-name descname"><span class="pre">roc_comparison</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">models</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cvreco/visuals.html#roc_comparison"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cvreco.visuals.roc_comparison" title="Permalink to this definition"></a></dt>
+<dd><p>Compare classic and FHE models using ROC curves.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>dataset</strong> (<em>pandas.DataFrame</em>) – Data to visualise.</p></li>
-<li><p><strong>bin_number</strong> (<em>int</em>) – Number of packs to make the visualisation.</p></li>
-<li><p><strong>color</strong> (<em>string</em>) – Name of the main color of the chart.</p></li>
+<li><p><strong>models</strong> (<em>dict</em>) – Dictionnary containing classic and FHE models</p></li>
+<li><p><strong>X_test</strong> (<em>pandas.DataFrame</em>) – Testing dataloader values</p></li>
+<li><p><strong>y_test</strong> (<em>pandas.DataFrame</em>) – Testing dataloader labels</p></li>
 </ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-cvreco.modeling">
+<span id="modeling"></span><h1>modeling<a class="headerlink" href="#module-cvreco.modeling" title="Permalink to this heading"></a></h1>
+</section>
+<section id="module-cvreco.modeling.models">
+<span id="models"></span><h1>models<a class="headerlink" href="#module-cvreco.modeling.models" title="Permalink to this heading"></a></h1>
+</section>
+<section id="module-cvreco.modeling.results">
+<span id="results"></span><h1>results<a class="headerlink" href="#module-cvreco.modeling.results" title="Permalink to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="cvreco.modeling.results.get_models_metrics">
+<span class="sig-prename descclassname"><span class="pre">cvreco.modeling.results.</span></span><span class="sig-name descname"><span class="pre">get_models_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">models</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cvreco/modeling/results.html#get_models_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cvreco.modeling.results.get_models_metrics" title="Permalink to this definition"></a></dt>
+<dd><p>Mesures how models perform using accuracy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>models</strong> (<em>dict</em>) – Dictionnary of models (normal and with FHE)</p></li>
+<li><p><strong>X_train</strong> (<em>pandas.DataFrame</em>) – Training dataloader values</p></li>
+<li><p><strong>y_train</strong> (<em>pandas.DataFrame</em>) – Training dataloader labels</p></li>
+<li><p><strong>X_test</strong> (<em>pandas.DataFrame</em>) – Testing dataloader values</p></li>
+<li><p><strong>y_test</strong> (<em>pandas.DataFrame</em>) – Testing dataloader labels</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The differents metrics calculated based on the models.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
 </dd>
 </dl>
 </dd></dl>
